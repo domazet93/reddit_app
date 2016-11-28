@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title></title>
+
+    <link rel="manifest" href="manifest.json">
+    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+    <script src="cordova.js"></script>
+    <script src="js/app.js"></script>
+  </head>
+
+  <body ng-app="starter">
+
+    <ion-pane>
+      <ion-header-bar class="bar-assertive" align-title="center">
+        <h1 class="title">Reddit</h1>
+        <button class="button button-icon icon ion-ios-shuffle" ng-click="showReorder = !showReorder"></button>
+      </ion-header-bar>
+
+      <ion-nav-view></ion-nav-view>
+
+      <script id="templates/home.html" type="text/ng-template">
+        <ion-view view-title="Home">
+          <ion-content>
+
+            <ion-refresher
+              pulling-text="Pull to refresh..."
+              on-refresh="getNewStories()">
+            </ion-refresher>
+
+            <ion-list show-reorder="showReorder">
+              <ion-item href="{{ story.url }}" target="_blank" class="item-checkbox-right item-avatar-left item" ng-repeat="story in stories track by story.id" ng-if="story.thumbnail.startsWith('http')">
+
+                  <img ng-src="{{ story.thumbnail }}">
+                  <h2> {{ story.title }} </h2>
+                  <p> {{ story.domain }} </p>
+                  <ion-option-button class="button-dark" ng-click="add(story)">
+                      <i class="ion-plus"></i>
+                  </ion-option-button>
+                  <ion-reorder-button class="ion-navicon"
+                        on-reorder="moveItem(story, $fromIndex, $toIndex)">
+                  </ion-reorder-button>
+              </ion-item>
+            </ion-list>
+
+            <ion-infinite-scroll
+              on-infinite="getOlderStories()"
+              distance="1%">
+            </ion-infinite-scroll>
+
+          </ion-content>
+        </ion-view>
+      </script>
+
+    <script id="templates/mynews.html" type="text/ng-template">
+      <ion-view view-title="News">
+        <ion-content>
+            <ion-list show-reorder="showReorder">
+              <ion-item href="{{ story.url }}" target="_blank" class="item-avatar-left item" ng-repeat="story in stories track by story.id" ng-if="story.thumbnail.startsWith('http')">
+
+                  <img ng-src="{{ story.thumbnail }}">
+                  <h2> {{ story.title }} </h2>
+                  <p> {{ story.domain }} </p>
+                  <ion-option-button class="button-dark" ng-click="delete(story)">
+                      <i class="ion-close"></i>
+                  </ion-option-button>
+                  <ion-reorder-button class="ion-navicon"
+                        on-reorder="moveItem(story, $fromIndex, $toIndex)">
+                  </ion-reorder-button>
+
+
+              </ion-item>
+            </ion-list>
+        </ion-content>
+      </ion-view>
+    </script>
+
+
+      <div class="tabs tabs-icon-left">
+        <a class="tab-item" href="#/mynews">
+          <i class="icon ion-star"></i>
+          Favorite News
+        </a>
+      </div>
+
+<ion-tabs class="tabs-stable tabs-icon-top">
+
+  <ion-tab title="Home" href="#/" icon-on="ion-ios-home" icon-off="ion-ios-home-outline">
+    <!-- Tab 1 content -->
+  </ion-tab>
+
+  <ion-tab title="Favorite News" href="#/mynews" icon-off="ion-android-star-outline" icon-on="ion-android-star">
+   </ion-tab>
+
+  <ion-tab title="Settings" icon-on="ion-ios-gear" icon-off="ion-ios-gear-outline">
+    <!-- Tab 3 content -->
+  </ion-tab>
+
+</ion-tabs>
+
+
+    </ion-pane>
+
+  </body>
+</html>
