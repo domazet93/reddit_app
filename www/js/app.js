@@ -39,7 +39,7 @@ angular.module('starter', ['ionic'])
   };
 
   function getStories(params, callback) {
-    $http.get("https://www.reddit.com/r/gaming/.json", {params:params})
+    $http.get("https://www.reddit.com/r/funny/.json", {params:params})
     .success(function(res) {
         var stories = [];
 
@@ -71,7 +71,8 @@ angular.module('starter', ['ionic'])
     })
   }
   $scope.add = function(story) {
-    if(Stories.indexOf(story)< 0) {
+    if(Stories.indexOf(story) < 0) {
+      console.log(story)
       Stories.push(story)
     } else {
       showAlert();
@@ -94,6 +95,9 @@ angular.module('starter', ['ionic'])
   $scope.moveItem = function(story, fromIndex, toIndex) {
     moveItems.moveItem($scope.stories, story, fromIndex, toIndex)
   }
+  $scope.showReorder = function() {
+    return $scope;
+  }
 
 })
 
@@ -114,12 +118,15 @@ angular.module('starter', ['ionic'])
   $urlRouterProvider.otherwise("/home");
 })
 
-
+.controller("tabsCtrl", function($scope, $state){
+  $scope.changeState = function(page) {
+    $state.go(page);
+  }
+})
 .service('Stories', function() {
     var stories = [];
     return stories;
 })
-
 .service("moveItems", function() {
   return {
     moveItem: function(stories,story, fromIndex, toIndex ) {

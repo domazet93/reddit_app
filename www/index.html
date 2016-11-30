@@ -17,15 +17,18 @@
   <body ng-app="starter">
 
     <ion-pane>
-      <ion-header-bar class="bar-assertive" align-title="center">
-        <h1 class="title">Reddit</h1>
-        <button class="button button-icon icon ion-ios-shuffle" ng-click="showReorder = !showReorder"></button>
-      </ion-header-bar>
 
-      <ion-nav-view></ion-nav-view>
+    <ion-nav-bar class="bar-assertive">
+        <ion-nav-back-button></ion-nav-back-button>
+    </ion-nav-bar>
+
+    <ion-nav-view>
+    </ion-nav-view>
+
 
       <script id="templates/home.html" type="text/ng-template">
-        <ion-view view-title="Home">
+        <ion-view view-title="Reddit">
+
           <ion-content>
 
             <ion-refresher
@@ -33,13 +36,13 @@
               on-refresh="getNewStories()">
             </ion-refresher>
 
-            <ion-list show-reorder="showReorder">
-              <ion-item href="{{ story.url }}" target="_blank" class="item-checkbox-right item-avatar-left item" ng-repeat="story in stories track by story.id" ng-if="story.thumbnail.startsWith('http')">
+            <ion-list>
+              <ion-item href="{{ story.url }}" target="_blank" class="item-checkbox-right item-avatar-left item" ng-repeat="story in stories track by $index" >
 
                   <img ng-src="{{ story.thumbnail }}">
                   <h2> {{ story.title }} </h2>
                   <p> {{ story.domain }} </p>
-                  <ion-option-button class="button-dark" ng-click="add(story)">
+                  <ion-option-button class="button-dark" ng-click="add(story)">&nbsp;&nbsp;
                       <i class="ion-plus"></i>
                   </ion-option-button>
                   <ion-reorder-button class="ion-navicon"
@@ -57,51 +60,39 @@
         </ion-view>
       </script>
 
+
     <script id="templates/mynews.html" type="text/ng-template">
-      <ion-view view-title="News">
+      <ion-view view-title="My News">
+
+      <ion-nav-buttons side="right">
+          <button class="shuffle button button-clear button-icon icon ion-ios-shuffle" ng-click="showReorder().shuffle = !showReorder().shuffle"></button>
+      </ion-nav-buttons>
+
         <ion-content>
-            <ion-list show-reorder="showReorder">
+            <ion-list show-reorder="showReorder().shuffle ">
               <ion-item href="{{ story.url }}" target="_blank" class="item-avatar-left item" ng-repeat="story in stories track by story.id" ng-if="story.thumbnail.startsWith('http')">
 
                   <img ng-src="{{ story.thumbnail }}">
                   <h2> {{ story.title }} </h2>
                   <p> {{ story.domain }} </p>
-                  <ion-option-button class="button-dark" ng-click="delete(story)">
+                  <ion-option-button class="button-dark" ng-click="delete(story)">&nbsp;&nbsp;
                       <i class="ion-close"></i>
                   </ion-option-button>
                   <ion-reorder-button class="ion-navicon"
                         on-reorder="moveItem(story, $fromIndex, $toIndex)">
                   </ion-reorder-button>
-
-
               </ion-item>
             </ion-list>
         </ion-content>
+
       </ion-view>
     </script>
 
-
-      <div class="tabs tabs-icon-left">
-        <a class="tab-item" href="#/mynews">
-          <i class="icon ion-star"></i>
-          Favorite News
-        </a>
-      </div>
-
-<ion-tabs class="tabs-stable tabs-icon-top">
-
-  <ion-tab title="Home" href="#/" icon-on="ion-ios-home" icon-off="ion-ios-home-outline">
-    <!-- Tab 1 content -->
-  </ion-tab>
-
-  <ion-tab title="Favorite News" href="#/mynews" icon-off="ion-android-star-outline" icon-on="ion-android-star">
-   </ion-tab>
-
-  <ion-tab title="Settings" icon-on="ion-ios-gear" icon-off="ion-ios-gear-outline">
-    <!-- Tab 3 content -->
-  </ion-tab>
-
-</ion-tabs>
+    <ion-tabs class="tabs-stable tabs-icon-top">
+      <ion-tab title="Home" href="#/" icon-on="ion-ios-home" icon-off="ion-ios-home-outline"></ion-tab>
+      <ion-tab title="Favorite News" href="#/mynews"  icon-off="ion-android-star-outline" icon-on="ion-android-star"></ion-tab>
+      <ion-tab title="Settings" icon-on="ion-ios-gear" icon-off="ion-ios-gear-outline"></ion-tab>
+    </ion-tabs>
 
 
     </ion-pane>

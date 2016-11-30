@@ -4,3 +4,6 @@
 .popUpAlign {
     text-align: center;
 }
+.disable-pointer-events{
+    pointer-events: all;
+}
