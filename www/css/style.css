@@ -1,9 +1,30 @@
-/* Empty. Add your own CSS if you like */
-
-
+body {
+    font-family: 'Comfortaa', cursive
+}
 .popUpAlign {
     text-align: center;
 }
-.disable-pointer-events{
-    pointer-events: all;
+.box img {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+.box {
+    text-align: center;
+}
+.custom-swiper-pagination {
+    bottom: 100px;
+    left: 0;
+    width: 100%;
+    color: #fff;
+}
+.custom-swiper-pagination .swiper-pagination-bullet {
+    margin: 0 5px;
+    background-color: #dd1111;
+}
+.white {
+    color: #fff;
 }

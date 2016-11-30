@@ -1,20 +1,10 @@
-// Ionic Starter App
-
-// angular.module is a global place for creating, registering and retrieving Angular modules
-// 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
-// the 2nd parameter is an array of 'requires'
 angular.module('starter', ['ionic'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     if(window.cordova && window.cordova.plugins.Keyboard) {
-      // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-      // for form inputs)
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
 
-      // Don't remove this line unless you know what you are doing. It stops the viewport
-      // from snapping when text inputs are focused. Ionic handles this internally for
-      // a much nicer keyboard experience.
       cordova.plugins.Keyboard.disableScroll(true);
     }
     if(window.StatusBar) {
@@ -37,7 +27,6 @@ angular.module('starter', ['ionic'])
        }]
      });
   };
-
   function getStories(params, callback) {
     $http.get("https://www.reddit.com/r/funny/.json", {params:params})
     .success(function(res) {
@@ -54,16 +43,15 @@ angular.module('starter', ['ionic'])
     var params = {};
 
     if($scope.stories.length > 0) {
-      params["after"] = $scope.stories[$scope.stories.length -1 ].name
+      params["after"] = $scope.stories[$scope.stories.length -1 ].name;
     }
-
     getStories(params, function(olderStores) {
       $scope.stories = $scope.stories.concat(olderStores)
       $scope.$broadcast('scroll.infiniteScrollComplete');
-    })
+    });
   }
   $scope.getNewStories = function() {
-    var params = {"before": $scope.stories[0].name}
+    var params = { "before": $scope.stories[0].name }
 
     getStories(params, function(newStories) {
       $scope.stories = newStories.concat($scope.stories)
@@ -84,12 +72,11 @@ angular.module('starter', ['ionic'])
   }
 })
 
-
 .controller("myNewsCtrl", function($scope, Stories, moveItems) {
-  $scope.stories = Stories
+  $scope.stories = Stories;
 
   $scope.delete = function(story) {
-    $scope.stories.splice(Stories.indexOf(story),1);
+    $scope.stories.splice(Stories.indexOf(story), 1);
     console.log("Current array-->", Stories.indexOf(story))
   }
   $scope.moveItem = function(story, fromIndex, toIndex) {
@@ -98,7 +85,26 @@ angular.module('starter', ['ionic'])
   $scope.showReorder = function() {
     return $scope;
   }
+})
 
+.controller("sliderCtrl", function($scope, $ionicSlideBoxDelegate) {
+
+  $scope.swiper = {
+          options: {
+              pagination: '.custom-swiper-pagination',
+              direction: 'horizontal',
+              spaceBetween: 20,
+              speed: 600
+          },
+          data: {}
+  };
+  $scope.swiper.color = ["#fff", "#0e62ea"];
+})
+
+.controller("tabsCtrl", function($scope, $state){
+  $scope.changeState = function(page) {
+    $state.go(page);
+  }
 })
 
 .config(function($stateProvider, $urlRouterProvider) {
@@ -114,15 +120,15 @@ angular.module('starter', ['ionic'])
       templateUrl: "templates/mynews.html",
       controller: "myNewsCtrl"
     })
+    .state("sliderPage", {
+      url: "/slider",
+      templateUrl: "templates/slider.html",
+      controller: "sliderCtrl"
+    })
 
   $urlRouterProvider.otherwise("/home");
 })
 
-.controller("tabsCtrl", function($scope, $state){
-  $scope.changeState = function(page) {
-    $state.go(page);
-  }
-})
 .service('Stories', function() {
     var stories = [];
     return stories;
@@ -130,8 +136,8 @@ angular.module('starter', ['ionic'])
 .service("moveItems", function() {
   return {
     moveItem: function(stories,story, fromIndex, toIndex ) {
-      stories.splice(fromIndex,1)
-      stories.splice(toIndex,0, story)
+      stories.splice(fromIndex, 1);
+      stories.splice(toIndex, 0 , story);
     }
   }
 })

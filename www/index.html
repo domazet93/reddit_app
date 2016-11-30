@@ -3,11 +3,14 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-    <title></title>
+    <title>Reddit</title>
+
 
     <link rel="manifest" href="manifest.json">
     <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+
     <link href="css/style.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Comfortaa" rel="stylesheet">
 
     <script src="lib/ionic/js/ionic.bundle.js"></script>
     <script src="cordova.js"></script>
@@ -15,7 +18,6 @@
   </head>
 
   <body ng-app="starter">
-
     <ion-pane>
 
     <ion-nav-bar class="bar-assertive">
@@ -28,7 +30,6 @@
 
       <script id="templates/home.html" type="text/ng-template">
         <ion-view view-title="Reddit">
-
           <ion-content>
 
             <ion-refresher
@@ -60,42 +61,73 @@
         </ion-view>
       </script>
 
+      <script id="templates/mynews.html" type="text/ng-template">
+        <ion-view view-title="My News">
 
-    <script id="templates/mynews.html" type="text/ng-template">
-      <ion-view view-title="My News">
+          <ion-nav-buttons side="right">
+              <button class="shuffle button button-clear button-icon icon ion-ios-shuffle" ng-click="showReorder().shuffle = !showReorder().shuffle"></button>
+          </ion-nav-buttons>
 
-      <ion-nav-buttons side="right">
-          <button class="shuffle button button-clear button-icon icon ion-ios-shuffle" ng-click="showReorder().shuffle = !showReorder().shuffle"></button>
-      </ion-nav-buttons>
+          <ion-content>
+              <ion-list show-reorder="showReorder().shuffle ">
+                  <ion-item href="{{ story.url }}" target="_blank" class="item-avatar-left item" ng-repeat="story in stories track by story.id" ng-if="story.thumbnail.startsWith('http')">
 
-        <ion-content>
-            <ion-list show-reorder="showReorder().shuffle ">
-              <ion-item href="{{ story.url }}" target="_blank" class="item-avatar-left item" ng-repeat="story in stories track by story.id" ng-if="story.thumbnail.startsWith('http')">
-
-                  <img ng-src="{{ story.thumbnail }}">
-                  <h2> {{ story.title }} </h2>
-                  <p> {{ story.domain }} </p>
-                  <ion-option-button class="button-dark" ng-click="delete(story)">&nbsp;&nbsp;
-                      <i class="ion-close"></i>
-                  </ion-option-button>
-                  <ion-reorder-button class="ion-navicon"
+                    <img ng-src="{{ story.thumbnail }}">
+                    <h2> {{ story.title }} </h2>
+                    <p> {{ story.domain }} </p>
+                    <ion-option-button class="button-dark" ng-click="delete(story)">&nbsp;&nbsp;
+                        <i class="ion-close"></i>
+                    </ion-option-button>
+                    <ion-reorder-button class="ion-navicon"
                         on-reorder="moveItem(story, $fromIndex, $toIndex)">
-                  </ion-reorder-button>
-              </ion-item>
-            </ion-list>
-        </ion-content>
+                    </ion-reorder-button>
+                </ion-item>
+              </ion-list>
+          </ion-content>
 
+        </ion-view>
+      </script>
+
+    <script type="text/ng-template" id="templates/slider.html">
+      <ion-view view-title="Slider">
+        <ion-content scroll="false">
+
+          <ion-slides options="swiper.options" slider="swiper.data.slider" >
+
+            <ion-slide-page ng-style="{'background-color': swiper.color[0]}">
+              <div class="box">
+              <h3>Welcome to Reddit app</h3>
+              <img ng-src="img/reddit.png">
+              </div>
+            </ion-slide-page>
+
+            <ion-slide-page ng-style="{'background-color': swiper.color[1]}">
+              <div class="box">
+                <h3 class="white">AngularJS</h3>
+                <img ng-src="img/angular.png">
+              </div>
+            </ion-slide-page>
+
+            <ion-slide-page ng-style="{'background-color': swiper.color[0]}">
+                <div class="box">
+                  <h3>Ionic</h3>
+                  <img ng-src="img/ionic.png">
+                </div>
+            </ion-slide-page>
+
+          </ion-slides>
+          <div class="custom-swiper-pagination swiper-pagination"></div>
+
+        </ion-content>
       </ion-view>
     </script>
 
-    <ion-tabs class="tabs-stable tabs-icon-top">
+    <ion-tabs class="tabs-stable  tabs-icon-top">
       <ion-tab title="Home" href="#/" icon-on="ion-ios-home" icon-off="ion-ios-home-outline"></ion-tab>
       <ion-tab title="Favorite News" href="#/mynews"  icon-off="ion-android-star-outline" icon-on="ion-android-star"></ion-tab>
-      <ion-tab title="Settings" icon-on="ion-ios-gear" icon-off="ion-ios-gear-outline"></ion-tab>
+      <ion-tab title="Slides" href="#/slider" icon-on="ion-ios-albums" icon-off="ion-ios-albums-outline"></ion-tab>
     </ion-tabs>
 
-
     </ion-pane>
-
   </body>
 </html>
