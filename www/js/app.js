@@ -107,11 +107,11 @@ angular.module('starter', ['ionic'])
   }
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
 
   $stateProvider
     .state('index', {
-      url: "/",
+      url: "/home",
       templateUrl: "templates/home.html",
       controller: "RedditCtrl"
     })
@@ -127,6 +127,8 @@ angular.module('starter', ['ionic'])
     })
 
   $urlRouterProvider.otherwise("/home");
+
+  $ionicConfigProvider.tabs.position('bottom');
 })
 
 .service('Stories', function() {
