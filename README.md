@@ -1,7 +1,5 @@
 # Reddit App for Android
 
-## Quickstart
-
 Install Cordova CLI:
 
     sudo npm install -g cordova
@@ -13,10 +11,11 @@ Create Cordova project:
 Navigate to the app files in project directory and remove all pre-generated files:
 
     cd reddit_app/www
+    rm -rf *
 
-Get the source from GitHub:
+Get the source from GitHub (notice dot at the end):
 
-    git clone git@github.com:domazet93/reddit_app.git
+    git clone git@github.com:domazet93/reddit_app.git .
 
 Add android platform:
 
@@ -28,7 +27,7 @@ Check all requirements for building the platform:
     
 Build the app:
 
-    cordova emulate android
+    cordova build android
 
 Open app with Android SDK emulator or run it on your device(must be connected into computer):
 
